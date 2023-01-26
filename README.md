@@ -1,71 +1,28 @@
-# SUMO-RL
+An Ontology-based Intelligent Traffic Signal Control Model
 
-SUMO-RL provides a simple interface to instantiate Reinforcement Learning environments with [SUMO v.1.5.0](https://github.com/eclipse/sumo) for Traffic Signal Control. 
+Reinforcement Learning (RL) can enhance the adjustment of the traffic signals' phases to improve the traffic flow. RL methods use ontologies and reasoning to enrich the controllers' domain knowledge, enabling them to interpret the traffic data, and ultimately improving their performance. 
 
-The main class [SumoEnvironment](https://github.com/LucasAlegre/sumo-rl/blob/master/environment/env.py) inherits [MultiAgentEnv](https://github.com/ray-project/ray/blob/master/python/ray/rllib/env/multi_agent_env.py) from [RLlib](https://github.com/ray-project/ray/tree/master/python/ray/rllib).  
-If instantiated with parameter 'single-agent=True', it behaves like a regular [Gym Env](https://github.com/openai/gym/blob/master/gym/core.py) from [OpenAI](https://github.com/openai).  
-[TrafficSignal](https://github.com/LucasAlegre/sumo-rl/blob/master/environment/traffic_signal.py) is responsible for retrieving information and actuating on traffic lights using [TraCI](https://sumo.dlr.de/wiki/TraCI) API.
+Various RL methods are proposed for signal controllers with assumptions such as operating in non-stochastic environments with a predictable traffic flow and observing the fine-grained information of all vehicles. Such methods have not examined the robustness of the trained RL controllers' action selection when deployed in dynamic environments with partial detection of vehicles. However, in the real world, not all vehicles can be detectable, and not all events can be predicted.
 
-Goals of this repository:
-- Provide a simple interface to work with Reinforcement Learning for Traffic Signal Control using SUMO.
-- Support Multiagent RL.
-- Compatibility with Gym Env and popular RL libraries like openAI baselines and RLlib.
-- Easy customisation: state and reward definitions are easily modifiable.
+In this paper, we propose an Ontology-based Intelligent Traffic Signal Control (OITSC) model that augments the RL controllers' observation using an environment ontology model, which improves their action selection particularly in dynamic, partially observable environments with stochastic traffic flow. The decreased vehicles' waiting time in various traffic scenarios with partial detection of vehicles, noisy sensor data, and unexpected traffic events shows that the performance of the controllers is significantly improved in all tested RL algorithms (i.e., Q-learning, SARSA, and Deep Q-Network).
 
-## Install
+This repository provides the implementation of Ontology-based Intelligent Traffic Signal Control (OITSC) model.
 
-### To install SUMO v1.5.0:
+References
 
-```
-sudo add-apt-repository ppa:sumo/stable
-sudo apt-get update
-sudo apt-get install sumo sumo-tools sumo-doc 
-```
-Don't forget to set SUMO_HOME variable (default sumo installation path is /usr/share/sumo)
-```
-echo 'export SUMO_HOME="/usr/share/sumo"' >> ~/.bashrc
-source ~/.bashrc
-```
+Baseline Code
 
-### To install sumo_rl package:
-```
-pip3 install -e .
-```
-
-## Examples
-
-Check [experiments](https://github.com/LucasAlegre/sumo-rl/tree/master/experiments) to see how to instantiate a SumoEnvironment and use it with your RL algorithm.
-
-### [Q-learning](https://github.com/LucasAlegre/sumo-rl/blob/master/agents/ql_agent.py) in a one-way single intersection:
-```
-python3 experiments/ql_single-intersection.py 
-```
-
-### [RLlib A3C](https://github.com/ray-project/ray/tree/master/python/ray/rllib/agents/a3c) multiagent in a 4x4 grid:
-```
-python3 experiments/a3c_4x4grid.py
-```
-
-### [stable-baselines A2C](https://stable-baselines.readthedocs.io/en/master/modules/a2c.html) in a 2-way single intersection:
-```
-python3 experiments/a2c_2way-single-intersection.py
-```
-
-### To plot results:
-```
-python3 outputs/plot.py -f outputs/2way-single-intersection/a3c 
-```
-![alt text](https://github.com/LucasAlegre/sumo-rl/blob/master/outputs/result.png)
+https://github.com/LucasAlegre/sumo-rl
 
 ## Cite
 If you use this repository in your research, please cite:
 ```
-@misc{sumorl,
-    author = {Lucas N. Alegre},
-    title = {SUMO-RL},
-    year = {2019},
-    publisher = {GitHub},
-    journal = {GitHub repository},
-    howpublished = {\url{https://github.com/LucasAlegre/sumo-rl}},
+@inproceedings{ghanadbashi2021ontology,
+  title={An ontology-based intelligent traffic signal control model},
+  author={Ghanadbashi, Saeedeh and Golpayegani, Fatemeh},
+  booktitle={2021 IEEE International Intelligent Transportation Systems Conference (ITSC)},
+  pages={2554--2561},
+  year={2021},
+  organization={IEEE}
 }
 ```
